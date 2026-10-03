@@ -42,9 +42,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 README_LIMIT = 6000
 FONT_PRESETS = ("paper", "terminal", "mixed")
 PRELOADS = {   # faces that appear above the fold in each preset (the headings are bold)
-    "paper": ["cmu-concrete-roman", "cmu-concrete-bold"],
-    "terminal": ["cmu-typewriter-regular", "cmu-typewriter-bold"],
-    "mixed": ["cmu-concrete-roman", "cmu-concrete-bold", "cmu-typewriter-bold"],
+    "paper": ["roboto-serif-display", "roboto-serif-text"],
+    "terminal": ["space-mono-regular", "space-mono-bold"],
+    "mixed": ["roboto-serif-display", "space-mono-regular", "space-mono-bold"],
 }
 
 
@@ -591,7 +591,7 @@ def render(data, font: str | None = None) -> tuple[str, dict]:
         blocks.append(f'<section id="{sid}" aria-labelledby="h-{sid}">\n<h2 id="h-{sid}">{esc(s["title"])}</h2>\n' + "\n".join(parts) + "\n</section>")
 
     url = str(site.get("url") or "").rstrip("/") + "/"
-    footer = inline(str(site.get("footer") or "Set in CMU Concrete and CMU Typewriter Text, under the [SIL Open Font License](fonts/OFL.txt)."))
+    footer = inline(str(site.get("footer") or "Set in [Roboto Serif](fonts/OFL-roboto-serif.txt) and [Space Mono](fonts/OFL-space-mono.txt), under the SIL Open Font License."))
     preloads = "\n".join(f'<link rel="preload" href="fonts/{f}.woff2" as="font" type="font/woff2" crossorigin>' for f in PRELOADS[preset])
     name = str(site["name"])
     page = string.Template(TEMPLATE.read_text(encoding="utf-8")).safe_substitute(

@@ -1,50 +1,59 @@
 /* Personal site. One centred column, no framework, no JavaScript needed to read it.
-   Layout and measurements follow the reference (gabgoh.github.io); typography is a deliberate choice. */
+   Dark, with an orange rule and a green accent: the layout is plain and only colour and type carry the mood. */
 
 /* ---- Fonts ---------------------------------------------------------------------------------
-   Self-hosted CM Unicode subsets (SIL OFL 1.1, see fonts/OFL.txt).
-   font-display: block, plus the <link rel="preload"> tags in index.html, means text is held back for
-   a few milliseconds instead of being drawn in one face and then swapped to another. */
-@font-face { font-family: "CMU Concrete"; font-weight: 400; font-style: normal; font-display: block;
-  src: url("fonts/cmu-concrete-roman.woff2") format("woff2"); }
-@font-face { font-family: "CMU Concrete"; font-weight: 700; font-style: normal; font-display: block;
-  src: url("fonts/cmu-concrete-bold.woff2") format("woff2"); }
-@font-face { font-family: "CMU Typewriter Text"; font-weight: 400; font-style: normal; font-display: block;
-  src: url("fonts/cmu-typewriter-regular.woff2") format("woff2"); }
-@font-face { font-family: "CMU Typewriter Text"; font-weight: 700; font-style: normal; font-display: block;
-  src: url("fonts/cmu-typewriter-bold.woff2") format("woff2"); }
+   Self-hosted, SIL OFL 1.1 (licences in fonts/). font-display: block, plus the <link rel="preload"> tags in
+   index.html, means text is held back for a few milliseconds instead of being drawn in one face and then
+   swapped to another. */
+@font-face { font-family: "Roboto Serif Display"; font-weight: 900; font-style: normal; font-display: block;
+  src: url("fonts/roboto-serif-display.woff2") format("woff2"); }
+@font-face { font-family: "Roboto Serif Text"; font-weight: 400 700; font-style: normal; font-display: block;
+  src: url("fonts/roboto-serif-text.woff2") format("woff2"); }
+@font-face { font-family: "Space Mono"; font-weight: 400; font-style: normal; font-display: block;
+  src: url("fonts/space-mono-regular.woff2") format("woff2"); }
+@font-face { font-family: "Space Mono"; font-weight: 700; font-style: normal; font-display: block;
+  src: url("fonts/space-mono-bold.woff2") format("woff2"); }
 
 /* ---- Font presets ----------------------------------------------------------------------------
    Change <html data-font="..."> (or `font:` in content/projects.yaml, then rebuild).
-     paper     CMU Concrete everywhere: reads like a typeset paper.
-     terminal  CMU Typewriter Text everywhere: reads like a terminal.
-     mixed     typewriter for the name and headings, Concrete for everything else (default).
+     mixed     heavy condensed serif for the name and headings, monospace for everything else (default).
+     terminal  monospace everywhere.
+     paper     the serif everywhere: heavy for the headings, a text weight for the rest.
    Each preset sets two custom properties. If a web font fails to load, each falls back inside its own
-   family (serif for paper, monospace for terminal), so one preset never turns into another. */
+   family (serif or monospace), so one preset never turns into another. */
 :root {
-  color-scheme: light;
-  --ink: #000;
-  --paper: #fff;
+  color-scheme: dark;
+  --paper: #0b0a10;        /* page */
+  --ink: #e9e4d8;         /* text */
+  --muted: #a39cb8;
+  --accent: #ff7a1a;       /* the rule under each heading */
+  --link: #ffb35c;
+  --green: #5dffa6;
+  --alert: #ff8e9a;        /* [draft] and [TODO] */
 
-  --concrete: "CMU Concrete", serif;
-  --typewriter: "CMU Typewriter Text", ui-monospace, monospace;
+  --display: "Roboto Serif Display", "Times New Roman", Times, serif;
+  --serif: "Roboto Serif Text", Georgia, "Times New Roman", serif;
+  --mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  --font-body: var(--concrete);
-  --font-head: var(--typewriter);
+  --font-body: var(--mono);
+  --font-head: var(--display);
+  --head-weight: 900;
+  --head-tracking: 0.03em;
 
-  --size-body: 13px;      /* the reference uses 13px (12.5px in some rows) */
-  --size-h1: 30px;        /* the reference h1 computes to 30px: 2em of its 15px wrapper */
-  --size-h2: 20px;
-  --leading: 1.5;
+  --size-body: 13px;
+  --size-h1: 46px;
+  --size-h2: 25px;
+  --leading: 1.55;
 }
-:root[data-font="paper"]    { --font-body: var(--concrete);   --font-head: var(--concrete); }
-:root[data-font="terminal"] { --font-body: var(--typewriter); --font-head: var(--typewriter); }
-:root[data-font="mixed"]    { --font-body: var(--concrete);   --font-head: var(--typewriter); }
+:root[data-font="mixed"]    { --font-body: var(--mono);  --font-head: var(--display); }
+:root[data-font="terminal"] { --font-body: var(--mono);  --font-head: var(--mono);
+                              --head-weight: 700; --head-tracking: 0.14em; --size-h1: 28px; --size-h2: 17px; }
+:root[data-font="paper"]    { --font-body: var(--serif); --font-head: var(--display); --size-body: 14px; }
 
 /* ---- Base ------------------------------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -57,36 +66,42 @@ body {
   overflow-wrap: break-word;
 }
 
-a { color: var(--ink); font-weight: 700; text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 2px; }
-a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+a { color: var(--link); font-weight: 700; text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; text-shadow: 0 0 12px rgba(255, 179, 92, 0.55); }
+a:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 2px; }
 
-.skip { position: absolute; left: 8px; top: -48px; padding: 6px 10px; background: var(--paper); border: 2px solid var(--ink); }
+.skip { position: absolute; left: 8px; top: -48px; padding: 6px 10px; background: var(--paper); border: 2px solid var(--green); }
 .skip:focus { top: 8px; }
 
 /* ---- Name and section headings -------------------------------------------------------------- */
-.masthead { padding-top: 28px; text-align: center; }
+.masthead { padding-top: 36px; text-align: center; }
 
 h1 {
   margin: 0;
   font-family: var(--font-head);
   font-size: var(--size-h1);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: var(--head-weight);
+  letter-spacing: var(--head-tracking);
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-shadow: 0 0 24px rgba(255, 122, 26, 0.3);
 }
 
 /* 550px of text plus 10px padding each side, and one 2px rule underneath: nothing else. */
 h2 {
   width: 100%;
   max-width: 570px;
-  margin: 28px auto 0;
+  margin: 30px auto 0;
   padding: 10px;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: 0 10px 14px -12px rgba(255, 122, 26, 0.85);
   text-align: center;
   font-family: var(--font-head);
   font-size: var(--size-h2);
-  font-weight: 700;
-  line-height: 1.3;
+  font-weight: var(--head-weight);
+  letter-spacing: var(--head-tracking);
+  text-transform: uppercase;
+  line-height: 1.2;
 }
 
 /* ---- Entries ---------------------------------------------------------------------------------
@@ -110,33 +125,35 @@ h2 {
 .entry--right { flex-direction: row-reverse; }
 .entry--right .entry__text { text-align: right; }
 
-.thumb { display: block; width: 150px; height: 150px; border-radius: 10px; background: #333; }
+.thumb { display: block; width: 150px; height: 150px; border: 1px solid rgba(255, 122, 26, 0.4); border-radius: 2px; background: #120f1f; }
 
 .entry__title { margin: 0; font-size: inherit; font-weight: 700; line-height: inherit; }
 .entry__text p { margin: 0 0 0.75em; }
 .entry__text p:last-child { margin-bottom: 0; }
+.entry__built b { color: var(--green); }
 .entry__links a + a { margin-left: 1.4em; }
 
 .hello { margin-bottom: 0.4em; font-weight: 700; }
 .contact { margin-top: 1em; }
 
-/* Markers for things you still have to fill in. Plain black: the page has no other colour. */
-/* a text decoration, not a border, so the marks appear together with the text and not before it */
-.todo, .draft { font-weight: 400; text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+/* Markers for things you still have to fill in.
+   A text decoration, not a border, so the marks appear together with the text and not before it. */
+.todo, .draft { color: var(--alert); font-weight: 400; text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .draft { white-space: nowrap; }
 
-footer { max-width: 570px; margin: 48px auto 0; padding-top: 12px; text-align: center; font-size: 12px; }
+footer { max-width: 570px; margin: 48px auto 0; padding-top: 12px; text-align: center; color: var(--muted); font-size: 12px; }
 
 /* ---- Phones ----------------------------------------------------------------------------------
    Stack each entry: image on top, centred; all text left-aligned. Body text goes up to 16px
    (15px in the monospace preset, whose letters are wider). */
 @media (max-width: 640px) {
-  :root { --size-body: 16px; --size-h1: 26px; --size-h2: 20px; --leading: 1.55; }
-  :root[data-font="terminal"] { --size-body: 15px; }
+  :root { --size-body: 16px; --size-h1: 36px; --size-h2: 23px; --leading: 1.55; }
+  :root[data-font="terminal"] { --size-body: 15px; --size-h1: 22px; --size-h2: 15px; }
+  :root[data-font="paper"] { --size-body: 16px; }
 
   body { padding-bottom: 32px; }
 
-  h2 { margin-top: 16px; }
+  h2 { margin-top: 18px; }
 
   .entry, .entry--right {
     flex-direction: column;
@@ -152,7 +169,10 @@ footer { max-width: 570px; margin: 48px auto 0; padding-top: 12px; text-align: c
   .entry__links a { display: inline-block; padding: 6px 0; }
 }
 
+/* On paper, back to dark ink on white. */
 @media print {
+  :root { --paper: #fff; --ink: #000; --muted: #444; --link: #000; --accent: #000; --green: #000; --alert: #000; }
   .skip { display: none; }
   a { text-decoration: underline; }
+  h1, h2 { text-shadow: none; box-shadow: none; }
 }

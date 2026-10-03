@@ -437,7 +437,7 @@ class BuildTest(unittest.TestCase):
 
 
 class ThumbTest(unittest.TestCase):
-    PALETTE = {thumbs.BG, thumbs.WHITE, *thumbs.REDS, "none"}
+    PALETTE = {thumbs.BG, thumbs.BONE, thumbs.GREEN, *thumbs.AMBERS, "none"}
 
     def test_deterministic(self):
         for name in ("Some-Repo", "another_one", "Eliza", "Stryder"):
