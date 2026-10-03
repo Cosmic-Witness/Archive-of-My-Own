@@ -1,0 +1,9 @@
+# local caches and scratch output
+.cache/
+_site/
+__pycache__/
+*.pyc
+*.yaml.tmp
+.venv/
+node_modules/
+lighthouse-*.json
