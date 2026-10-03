@@ -1,0 +1,342 @@
+# Everything the site shows lives in this file. Edit it, then run:  python scripts/build.py
+#
+# The build refreshes the `github:` block of every entry from GitHub and never touches the rest.
+# So these fields are yours, and are never overwritten by a sync:
+#   title, section, section_status, blurb, blurb_status, built_with, links, thumb, thumb_alt, order, hidden
+# and everything under site:, about:, sections: and force_include:.
+#
+# How to
+#   Edit a blurb        change `blurb:` (blank line = new paragraph; [text](url) and **bold** work),
+#                       then set `blurb_status: final` to remove the "[draft]" mark from the page.
+#   Move a repo         change `section:` to projects, writing or fun; set `section_status: confirmed`.
+#   Change the order    give entries `order: 1`, `order: 2`, ... Lower comes first, within a section.
+#                       Entries without `order` follow: pinned repos first (needs GITHUB_TOKEN when you
+#                       build), then most recently pushed.
+#   Hide an entry       `hidden: true`.   Show a repo listed under `excluded:`  add its name to
+#                       `force_include:` and rebuild.
+#   Switch the font     `site.font:` paper | terminal | mixed.
+#   Swap a thumbnail    save your own SVG or PNG as thumbs/<name>.svg (or point `thumb:` at any file).
+#   Add a Writing entry copy the example below into `entries:` and fill it in.
+#
+#   - id: my-first-note            # any unique word, no spaces
+#     section: writing
+#     title: A Short Note on Something
+#     blurb: Two to five sentences, in your own voice.
+#     blurb_status: final
+#     links:
+#       - {label: Paper, url: "https://example.org/my-note.pdf"}
+#     thumb: thumbs/my-first-note.svg   # run: python scripts/thumbs.py --name my-first-note
+#     thumb_alt: A short description of the picture, for screen readers.
+#
+# [TODO] marks things only you can fill in. Search this file and the page for it.
+#
+# [TODO] The GitHub fields below (description, topics, language, stars, homepage) were seeded from a file, because the
+# machine that built this first version could not reach the GitHub API. Run `python scripts/build.py` once, from a
+# machine that can, to replace them with GitHub's own values. Your edits are kept.
+
+site:
+  name: Ismail Kasozi
+  title: Ismail Kasozi
+  description: "Personal site of Ismail Kasozi: projects, writing and experiments."
+  # GitHub serves a repo at https://<user>.github.io only if the repo is called <user>.github.io.
+  # Under any other repo name the address is https://<user>.github.io/<repo>/ and this should match it.
+  url: https://cosmic-witness.github.io/
+  github_user: Cosmic-Witness
+  site_repo: Archive-of-My-Own     # this repo; never listed as a project
+  font: mixed                      # paper | terminal | mixed
+  language: en
+
+about:
+  hello: Hi!
+  paragraphs:
+    - "[TODO: one or two plain sentences on who you are and what you do.]"
+    - "[TODO: what you are interested in, in your own words.]"
+    - "[TODO: what you are working on, or looking for, right now.]"
+  photo: thumbs/photo-placeholder.svg      # [TODO] replace with your portrait (square, 300x300 or larger)
+  photo_alt: Placeholder for a portrait of Ismail Kasozi
+  contact:
+    email:                                  # split on purpose, so scrapers reading this repo or the page do not find it
+      user: k.kasozi69
+      domain: gmail.com
+    links:
+      - {label: GitHub, url: "https://github.com/Cosmic-Witness", text: Cosmic-Witness}
+      - {label: LinkedIn, url: ""}          # [TODO] paste your profile URL, or delete this line
+      - {label: X, url: ""}                 # [TODO] same
+
+# Page order. A section with no visible entries is left out of the page.
+sections:
+  - {id: projects, title: Projects}
+  - {id: writing, title: Writing}
+  - {id: fun, title: Fun}
+
+# Names of repos listed under `excluded:` that you want on the page anyway.
+force_include: []
+
+entries:
+  - id: Projections
+    section: projects
+    section_status: proposed
+    title: Projections
+    blurb: >-
+      An essay that teaches Fourier transforms by locking you in an escape room with a signal, a
+      keypad and a chatbot that will only explain things twice. A paper that squeezes momentum tensors
+      with a cosine transform sent me off to learn the transform properly, which took about two
+      months. The maths is typeset with KaTeX, and the first figure is only the vector (3, 7) split
+      into its two coordinates.
+    blurb_status: draft
+    built_with: HTML, CSS, KaTeX
+    links: [{label: Paper, url: "https://github.com/Cosmic-Witness/Projections/blob/main/Projections.pdf"}]
+    thumb: thumbs/Projections.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Projections
+      url: https://github.com/Cosmic-Witness/Projections
+      description: ''
+      topics: []
+      language: HTML
+      homepage: ''
+      has_pages: true
+      default_branch: main
+      pushed_at: "2026-08-21T06:23:32Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: |
+        # Projections
+
+        A native-web edition of **Projections: An Intuitive Introduction to Fourier Transforms** by Kasozi Ismail.
+      source: fixture (offline-seed.json)
+  - id: Ellie
+    section: fun
+    section_status: proposed
+    title: Ellie
+    blurb: >-
+      The New York Times emails a daily briefing, and the photographs in it are good enough that I
+      wanted to keep them. Ellie reads those emails through the Gmail API, pulls out every image
+      larger than 500 by 500 pixels, and files them in a folder named after the day. It cannot yet
+      handle multipart emails, which is on the to-do list.
+    blurb_status: draft
+    built_with: Python, Gmail API, Beautiful Soup, Pillow
+    links: []
+    thumb: thumbs/Ellie.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Ellie
+      url: https://github.com/Cosmic-Witness/Ellie
+      description: ''
+      topics: []
+      language: Python
+      homepage: ''
+      has_pages:
+      default_branch: main
+      pushed_at: "2026-08-01T09:24:31Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: |
+        # Ellie
+        The New York Times sends out a daily briefing newsletter to the inboxes of subscribers every week from Monday to Friday. Ellie downloads stunning and captivating photos of news around the world straight from your inbox and saves them in folders named after the day they were taken.
+
+        !!!READ THIS AND DO THIS FIRST!!!!
+        1. Clone this repo: `git clone https://github.com/Canopy-PurpleSky/The-New-York-Times-Image-Downloader.git`
+        2. Install dependencies: `[e.g., pip install -r requirements.txt]`
+        3. Get Google API credentials:
+           - Go to Google Cloud Console (https://console.cloud.google.com/).
+           - Create a project and enable the [relevant API, e.g., Google Drive API].
+           - Create OAuth 2.0 credentials (Desktop app) and download the JSON file.
+           - Rename it to `credentials.json` and place it in the project root:
+        4. Run the script: `[e.g., python downloader.py]`
+      source: fixture (offline-seed.json)
+  - id: Naive-Discrete-Fourier-Transform
+    section: fun
+    section_status: proposed
+    title: Naive Discrete Fourier Transform
+    blurb: >-
+      A Fourier transform written from scratch, to see if I could turn the maths on paper into code
+      that recovers the frequencies hiding in a signal. The toy signal is five sine and cosine waves
+      added together, and the code finds each one by multiplying by a complex exponential at that
+      frequency and integrating. The strongest wave, at 7 Hz, has an amplitude of 100, which makes the
+      other four look a bit sad.
+    blurb_status: draft
+    built_with: Python, NumPy, Matplotlib
+    links: []
+    thumb: thumbs/Naive-Discrete-Fourier-Transform.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Naive-Discrete-Fourier-Transform
+      url: https://github.com/Cosmic-Witness/Naive-Discrete-Fourier-Transform
+      description: ''
+      topics: []
+      language: Python
+      homepage: ''
+      has_pages:
+      default_branch: main
+      pushed_at: "2026-07-19T17:08:37Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: |
+        # Naive-Discrete-Fourier-Transform
+        A fun little hand-coded implementation of a Fourier Transform. A low-frequency toy signal is defined a priori over the interval [0,1], and a much higher sampling rate is used. The goal was to turn math on paper into a code implementation that could reliably recover the frequencies present in the signal.
+
+        With the famous inner product that defines the geometry of the Hilbert Space with the trigonometric functions as basis vectors, we can project our signal into this space by multiplying it by a complex exponential probe at a frequency n and finding its integral (scaled appropriately ofc).
+
+        At any frequency n, we have two sinusoidal basis vectors, cos(nx) and sin(nx). In essence, at frequency n, we take a 2-D slice of the infinite-dimensional space and ask whether our signal has any components in that space and, if so, where they are. The complex exponential just neatly packages the cos and sin such that we can get both coordinates at the same time (which also makes our job of computing magnitudes much easier).
+
+        The coordinates are complex numbers, and their magnitudes provide the information on "how much" of a particular frequency is present in the signal.
+      source: fixture (offline-seed.json)
+  - id: Eliza
+    section: projects
+    section_status: proposed
+    title: Eliza
+    blurb: >-
+      I wrote a small Python class for the capital asset pricing model. Give it a stock and an index,
+      and it downloads the prices, regresses one on the other, and reports the beta, the alpha, and
+      how much of the stock's volatility is the market's and how much is its own. A second method
+      turns those into dollars of risk. I haven't written the last two methods yet, and every new
+      instance prints a large green ASCII banner.
+    blurb_status: draft
+    built_with: Python, pandas, statsmodels, yfinance
+    links: []
+    thumb: thumbs/Eliza.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Eliza
+      url: https://github.com/Cosmic-Witness/Eliza
+      description: ''
+      topics: []
+      language: Python
+      homepage: ''
+      has_pages:
+      default_branch: main
+      pushed_at: "2026-03-30T08:20:05Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: ''
+      source: fixture (offline-seed.json)
+  - id: Ada
+    section: projects
+    section_status: proposed
+    title: Ada
+    blurb: >-
+      I wrote a bot that posts videos from a Google Drive folder to Instagram as Reels, one at a time,
+      with at least a minute between uploads. Which videos have already gone out is kept in a Supabase
+      table instead of a local file, so the Docker container can be restarted without posting anything
+      twice. My README admits it may break Instagram's terms of service, so read it as an exercise in
+      plumbing.
+    blurb_status: draft
+    built_with: Python, Docker, Supabase, Google Drive API, instagrapi
+    links: []
+    thumb: thumbs/Ada.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Ada
+      url: https://github.com/Cosmic-Witness/Ada
+      description: ''
+      topics: []
+      language: Python
+      homepage: ''
+      has_pages:
+      default_branch: main
+      pushed_at: "2026-03-29T15:17:26Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: |
+        Instagram Uploader Bot
+        This project automates the process of uploading videos from a Google Drive folder to an Instagram account. It is written in Python and is designed to be deployed as a Docker container, making it suitable for continuous cloud-based operation. Upload history is persisted remotely via a Supabase database, which eliminates the need for a local SQLite file and allows the bot to run statelessly across container restarts.
+
+        How It Works
+        When the script runs, it begins by decoding the Google credentials from environment variables and writing them to disk, then authenticates with the Google Drive API using OAuth 2.0. It retrieves the list of video files present in the configured Drive folder and iterates through each one. For every video, it queries Supabase to determine whether that file has already been uploaded. If it has, the video is skipped. If it is new, the script downloads the file locally, logs into Instagram — reusing a saved session where possible — and uploads the video as a Reel with a caption derived from the filename. A record of the upload is then written to Supabase, and the local file is deleted. To reduce the risk of triggering Instagram's rate limits, the bot enforces a minimum one-minute gap between consecutive uploads.
+
+        Project Structure
+        The codebase is divided across several modules. main.py serves as the entry point and orchestrates the full pipeline. google_drive.py handles OAuth authentication with Google and exposes functions for listing and downloading video files. instagram.py manages Instagram login and video upload via the instagrapi library, with session persistence handled through a local sessions.json file. database.py encapsulates all interactions with Supabase, including upload record insertion, duplicate checking, timestamp retrieval, and rate-limit enforcement. The Dockerfile defines the container environment, including system-level dependencies such as ffmpeg which is required for video processing.
+
+        Dependencies
+        The project requires the following Python packages, all listed in requirements.txt: python-dotenv for environment variable management, supabase for database connectivity, google-api-python-client, google-auth, and google-auth-oauthlib for Google Drive integration, instagrapi for Instagram automation, and rich for enhanced terminal output.
+
+        Configuration
+        The application is configured entirely through environment variables, which should be set in the deployment environment or in a local .env file. The required variables are as follows.
+        GOOGLE_DRIVE_FOLDER_ID must be set to the ID of the Google Drive folder containing the videos to be uploaded. This ID is the final path segment of the folder's URL. INSTAGRAM_USERNAME and INSTAGRAM_PASSWORD should contain the credentials for the target Instagram account. SUPABASE_URL and SUPABASE_KEY must point to the Supabase project used for upload tracking. Finally, RAILWAY_GOOGLE_CREDENTIALS and RAILWAY_GOOGLE_TOKEN should contain the base64-encoded contents of credentials.json and token.json respectively, allowing the container to reconstruct these files at runtime without baking sensitive data into the image.
+
+        Supabase Setup
+        The Supabase project must contain a table named uploaded_videos with at minimum two columns: file_id of type text, which stores the Google Drive file ID, and timestamp_utc of type text, which records the time of upload in ISO 8601 format. No local database initialisation is required — the remote table must simply exist and be accessible via the provided credentials.
+
+        Running with Docker
+        The recommended deployment method is Docker. The image is built from the repository root and configured to run main.py on container start. All secrets are injected as environment variables at runtime rather than being embedded in the image. Because Supabase is used as the backing store, no volume mounts are required to persist state between runs — the container is effectively stateless.
+
+        Running Locally
+        For local testing, install the dependencies with pip install -r requirements.txt, populate a .env file with the variables described above, ensure that valid credentials.json and token.json files are present in the project directory, and execute python main.py. On the first run against a fresh Google authorisation, the OAuth flow will need to be completed interactively in the browser.
+        This README was generated by Claude on Sunday, 29 March 2026 at 15:05:20 UTC.
+
+        This may violate Instagram ToS btw.
+      source: fixture (offline-seed.json)
+  - id: Stryder
+    section: projects
+    section_status: proposed
+    title: Stryder
+    blurb: >-
+      My question was whether a small neural network can learn to undo a messy cipher from examples
+      alone. Each letter of a word is encrypted by a randomly chosen scheme out of five (shift, XOR,
+      substitution, Base64 and bit reversal), and an LSTM encoder and decoder learns to turn the
+      ciphertext back into the word. The detail that makes it learnable is the seed: every word's
+      randomness comes from one of only twenty seeds, which gives the network some structure to find.
+      In the notebook, the training loss falls from 1.76 to 0.004 over 100 epochs.
+    blurb_status: draft
+    built_with: Python, PyTorch, Weights & Biases
+    links: []
+    thumb: thumbs/Stryder.svg
+    thumb_alt: ''
+    order:
+    hidden: false
+    # refreshed from GitHub on every build; edit the fields above, not these
+    github:
+      name: Stryder
+      url: https://github.com/Cosmic-Witness/Stryder
+      description: ''
+      topics: []
+      language: Jupyter Notebook
+      homepage: ''
+      has_pages:
+      default_branch: main
+      pushed_at: "2026-03-29T14:21:37Z"
+      stars: 0
+      pinned: false
+      pinned_rank:
+      readme: |
+        # Stryder
+        This project is an experiment to explore the extent to which the vector space of a simple seq2seq autoencoder can hold information about the relationships between data generated from a noisy phenomenon.  Here, a stochastic obfuscation scheme was created, and an autoencoder was used to predict plaintext from ciphered text.
+
+        First, a pool of simple encryption schemes was created. These encryption schemes were the xor_cipher, shift_cipher, substitution_cipher, base64_encode and a reverse_bits cypher. A word is encrypted letter by letter, and for each letter, an encryption scheme is chosen at random. This randomness makes the overall ensemble encryption stronger than any single encryption. Decrypting such a ciphertext would require keeping track of which cypher was used for each letter. Since one letter can have multiple different ciphertext representations because different cyphers may be applied randomly, keeping track of the set of cyphers used per word becomes very difficult.
+
+        Regardless, that is not the focus of this experiment. Rather, I attempted to undo the encryption using fewer resources. Neural networks are universal function approximators. They are good at encoding nonlinear patterns in a latent vector space representation and then using this representation to make predictions. The key thing is that structure is required in order for these networks to be a tractable solution to this problem. We therefore need to bound the randomness and somehow give it structure.
+
+        In Python, this is accomplished using the seed parameter from the "random" library. Given the fact that all computers are deterministic and the best we can hope to achieve is pseudorandomness, this may seem unnecessary, for there would still be some definite structure for the neural net to learn, even though a seed was not used. However, even this pseudorandomness is random enough to warrant the use of seeds.
+
+        It was a really fun experiment, and I encourage the reader to try it out for themselves. You will have to set up your own Weights and Biases project and API, though
+      source: fixture (offline-seed.json)
+excluded:
+  - name: Archive-of-My-Own
+    url: https://github.com/Cosmic-Witness/Archive-of-My-Own
+    reason: this site's own repo
+    description: ''
+  - name: Quine
+    url: https://github.com/Cosmic-Witness/Quine
+    reason: fork
+    description: ''

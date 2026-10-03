@@ -1,0 +1,41 @@
+# Report: building the site
+
+This report covers what was taken from the reference, where the site departs from it and why, which repositories were used, what could not be checked, and what is left for you to do. Nothing has been pushed and Pages has not been enabled.
+
+## What I took from the reference
+
+The reference is a hand-written page with all its CSS in one `<style>` block. I rendered it at 1440px and 390px, once with its font file loading and once with that file blocked, and read the source. From it I took the structure and the measurements: a single centred column, section headings with a 550px text width, 10px padding and one 2px black rule, and entry rows 500px wide with 40px side padding. Each row is a flex container with a thumbnail column and a text column in the ratio 1 to 2, a 30px gap, and 150px thumbnails with 10px corners. The sides alternate down the whole page, starting with the About photo on the left, and the text is aligned towards the image. Links are black, bold and ununderlined. Each entry has a bold linked title, a short blurb, an optional bold line of extras (my "Built with:", his "Examples:") and bold links. I also took the typeface itself. The name table of `cmunorm.ttf` reads family "CMU Concrete", style "Roman", PostScript name `CMUConcrete-Roman`, so your guess was right and it is not CMU Serif.
+
+## Where the reference differs from the table in the brief
+
+Most of the table holds, but five points do not. The `h1` is not 15px: that size belongs to the `#header` wrapper, and the `h1` inside it computes to 30px, bold. The font stack is not set on the whole page but on four wrappers (`#header`, `h2`, `#section`, `#sectionmid`), so anything outside them would be Times. Only five of the seven images are SVGs, and only the three publication thumbnails are really dark grey with red and white lines; the two code thumbnails are black with colour gradients. The page has no viewport tag, so a real phone shows it as a 980px layout scaled to about 0.4, which makes the 13px text about 5px tall, and a plain 390px window scrolls sideways at 588px. Last, the page declares only a regular face, so every bold word on it is synthesised bold, and the vertical gap between rows is 80px (40 below one row plus 40 above the next), not 40.
+
+## Where my site departs from the reference, and why
+
+The typography is now a choice. The default preset, `mixed`, sets the name and headings in CMU Typewriter Text and everything else in CMU Concrete; `paper` and `terminal` set everything in one of them. Each preset uses two custom properties, `--font-body` and `--font-head`, rather than one, because `mixed` needs two faces. Fonts are preloaded and use `font-display: block`. I tested this by delaying the font files by 1.5 seconds and reading raw screenshots: no text was drawn until the right face arrived. With the files blocked outright, each preset falls back inside its own family (serif for `paper`, monospace for `terminal`, both for `mixed`), so one never turns into another. The only thing drawn early is the dotted underline on the temporary TODO and draft marks.
+
+I shipped real bold faces instead of synthetic bold, which costs two more 25 KB files, and I dropped hinting to halve each file to about 25 KB. The fonts come from the official Computer Modern Unicode 0.7.0 release on SourceForge, checked against its SHA-256 hash, and are used under the SIL Open Font License. That licence reserves the name "Computer Modern Unicode fonts" and treats subsetting as a modification, so the subsets keep their original family names, which do not contain the reserved name, and `OFL.txt` ships beside them. These text faces have no real maths operators: they lack `≤ ≥ ≠ ≈ ∞ ∑ ∫` and similar, which fall back to a system font. They do have Greek, `× ÷ ± − √` and arrows.
+
+The layout differences are small. Body text is a single 13px, not 13 and 12.5, and rises to 16px on phones (15px for `terminal`, whose letters are wider). Entries are 40px apart, as the brief asks. Below 640px each entry stacks with the image on top. I added what the reference lacks: a title, language and viewport tag, alt text on every image, Open Graph tags, favicons, a skip link, a visible focus outline and an underline on hover. Every thumbnail shares one background (`#333333`) and one palette, which the reference does not.
+
+On the pipeline, the deploy workflow renders the page from the committed YAML and does not sync with GitHub. I chose this so that a newly created repo cannot reach the live site without your review. Syncing is a command you run yourself. I also added things you did not ask for: unit tests against a fake GitHub server, a font build script and a screenshot tool.
+
+## Repositories
+
+Six of your public repositories are on the page. Projects holds Projections, Eliza, Ada and Stryder; Fun holds Ellie and Naive-Discrete-Fourier-Transform. Two were excluded: Quine, because it is a fork, and Archive-of-My-Own, because it is this site. You have no profile README repo and no archived or empty public repos. Your private repositories are not returned by `GET /users/{user}/repos`, and the script would skip them even if they were, without writing their names anywhere. I searched every file for those names and found none.
+
+The script's keyword rule proposed Projects for everything except Naive-Discrete-Fourier-Transform. I moved Ellie to Fun by hand because it is a small personal utility. Ada is the entry I am least sure about: it is the most engineered of the six, but its README says it may violate Instagram's terms of service, so you may prefer Fun or to hide it. Projections is really a piece of writing and could move to Writing; I left it in Projects because you said Writing is empty for now. All sections are marked `proposed`. The three thumbnails drawn from real material are Projections (Figure 1, the vector (3, 7)), Naive-Discrete-Fourier-Transform (its coefficients, recomputed with the repo's own formula) and Stryder (the 100 epoch losses printed in its notebook). The other three are drawings of what the project does, and the scatter on Eliza is schematic.
+
+## What I could not check
+
+The GitHub API call itself was not run against GitHub. The proxy in this environment answers `GET /users/{user}/repos` with a 403, "sessions are bound to their configured repositories", and I did not attach your repos with write credentials just to read their descriptions. Instead the pipeline, including paging, tokens, rate limits, GraphQL pinned items and the privacy rules, is tested against a fake server, and the first `content/projects.yaml` was seeded from the repo list and local clones. Descriptions, topics, star counts and homepages are therefore blank, and the language of each repo is my estimate. Run `python scripts/build.py` once to replace them.
+
+The site was tested in Chromium 141 only; Firefox and Safari were not available. It uses only long-supported features. Lighthouse 13.5 on its default mobile profile scored 100 in all four categories for every preset, three runs for the default, with a local server and no real network. The W3C Nu checker reports nothing for the page, the stylesheet and every SVG.
+
+## What is left for you
+
+Write the three About paragraphs and supply a portrait, replacing the placeholder. Fill in or delete the LinkedIn and X lines. Rewrite the six blurbs in your own voice; each is marked as a draft, and I wrote them only from facts in the repos. Confirm each section. Check the email address: I took it from the byline of your Projections essay. Choose the address (rename the repo to `Cosmic-Witness.github.io`, or keep the name and set `site.url`), enable Pages, and tell me when to push. The `docs/screenshots/compare-1440.png` image contains the reference site's text and images, so you may prefer not to commit it to a public repo; the live site does not publish `docs/`.
+
+## Two things I noticed in your repos
+
+In Ada's `main.py`, the line `os.getenv("RAILWAY_GOOGLE_CREDENTIALS ")` has a trailing space inside the variable name, so it will return nothing unless the variable is named that way. Ellie's README still contains template placeholders such as `[e.g., pip install -r requirements.txt]` and points to a clone URL under a different account.

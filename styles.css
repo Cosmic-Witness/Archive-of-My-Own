@@ -1,0 +1,158 @@
+/* Personal site. One centred column, no framework, no JavaScript needed to read it.
+   Layout and measurements follow the reference (gabgoh.github.io); typography is a deliberate choice. */
+
+/* ---- Fonts ---------------------------------------------------------------------------------
+   Self-hosted CM Unicode subsets (SIL OFL 1.1, see fonts/README.md).
+   font-display: block, plus the <link rel="preload"> tags in index.html, means text is held back for
+   a few milliseconds instead of being drawn in one face and then swapped to another. */
+@font-face { font-family: "CMU Concrete"; font-weight: 400; font-style: normal; font-display: block;
+  src: url("fonts/cmu-concrete-roman.woff2") format("woff2"); }
+@font-face { font-family: "CMU Concrete"; font-weight: 700; font-style: normal; font-display: block;
+  src: url("fonts/cmu-concrete-bold.woff2") format("woff2"); }
+@font-face { font-family: "CMU Typewriter Text"; font-weight: 400; font-style: normal; font-display: block;
+  src: url("fonts/cmu-typewriter-regular.woff2") format("woff2"); }
+@font-face { font-family: "CMU Typewriter Text"; font-weight: 700; font-style: normal; font-display: block;
+  src: url("fonts/cmu-typewriter-bold.woff2") format("woff2"); }
+
+/* ---- Font presets ----------------------------------------------------------------------------
+   Change <html data-font="..."> (or `font:` in content/projects.yaml, then rebuild).
+     paper     CMU Concrete everywhere: reads like a typeset paper.
+     terminal  CMU Typewriter Text everywhere: reads like a terminal.
+     mixed     typewriter for the name and headings, Concrete for everything else (default).
+   Each preset sets two custom properties. If a web font fails to load, each falls back inside its own
+   family (serif for paper, monospace for terminal), so one preset never turns into another. */
+:root {
+  color-scheme: light;
+  --ink: #000;
+  --paper: #fff;
+
+  --concrete: "CMU Concrete", serif;
+  --typewriter: "CMU Typewriter Text", ui-monospace, monospace;
+
+  --font-body: var(--concrete);
+  --font-head: var(--typewriter);
+
+  --size-body: 13px;      /* the reference uses 13px (12.5px in some rows) */
+  --size-h1: 30px;        /* the reference h1 computes to 30px: 2em of its 15px wrapper */
+  --size-h2: 20px;
+  --leading: 1.5;
+}
+:root[data-font="paper"]    { --font-body: var(--concrete);   --font-head: var(--concrete); }
+:root[data-font="terminal"] { --font-body: var(--typewriter); --font-head: var(--typewriter); }
+:root[data-font="mixed"]    { --font-body: var(--concrete);   --font-head: var(--typewriter); }
+
+/* ---- Base ------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 16px 48px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading);
+  overflow-wrap: break-word;
+}
+
+a { color: var(--ink); font-weight: 700; text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
+.skip { position: absolute; left: 8px; top: -48px; padding: 6px 10px; background: var(--paper); border: 2px solid var(--ink); }
+.skip:focus { top: 8px; }
+
+/* ---- Name and section headings -------------------------------------------------------------- */
+.masthead { padding-top: 28px; text-align: center; }
+
+h1 {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: var(--size-h1);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* 550px of text plus 10px padding each side, and one 2px rule underneath: nothing else. */
+h2 {
+  width: 100%;
+  max-width: 570px;
+  margin: 28px auto 0;
+  padding: 10px;
+  border-bottom: 2px solid var(--ink);
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: var(--size-h2);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ---- Entries ---------------------------------------------------------------------------------
+   500px of content plus 40px padding each side; thumbnail column 1 : text column 2; 30px gap.
+   Vertical padding of 20px top and bottom gives 40px between entries. */
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+.entry:first-of-type { padding-top: 40px; }
+
+.entry__media { flex: 1 1 0; display: flex; justify-content: center; min-width: 0; }
+.entry__text { flex: 2 1 0; min-width: 0; text-align: left; }
+
+/* The zigzag: image on the right, text on the right-hand side of its column, aligned towards the image. */
+.entry--right { flex-direction: row-reverse; }
+.entry--right .entry__text { text-align: right; }
+
+.thumb { display: block; width: 150px; height: 150px; border-radius: 10px; background: #333; }
+
+.entry__title { margin: 0; font-size: inherit; font-weight: 700; line-height: inherit; }
+.entry__text p { margin: 0 0 0.75em; }
+.entry__text p:last-child { margin-bottom: 0; }
+.entry__links a + a { margin-left: 1.4em; }
+
+.hello { margin-bottom: 0.4em; font-weight: 700; }
+.contact { margin-top: 1em; }
+
+/* Markers for things you still have to fill in. Plain black: the page has no other colour. */
+/* a text decoration, not a border, so the marks appear together with the text and not before it */
+.todo, .draft { font-weight: 400; text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.draft { white-space: nowrap; }
+
+footer { max-width: 570px; margin: 48px auto 0; padding-top: 12px; text-align: center; font-size: 12px; }
+
+/* ---- Phones ----------------------------------------------------------------------------------
+   Stack each entry: image on top, centred; all text left-aligned. Body text goes up to 16px
+   (15px in the monospace preset, whose letters are wider). */
+@media (max-width: 640px) {
+  :root { --size-body: 16px; --size-h1: 26px; --size-h2: 20px; --leading: 1.55; }
+  :root[data-font="terminal"] { --size-body: 15px; }
+
+  body { padding-bottom: 32px; }
+
+  h2 { margin-top: 16px; }
+
+  .entry, .entry--right {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 500px;
+    padding: 24px 0;
+  }
+  .entry:first-of-type { padding-top: 28px; }
+  .entry__media { flex: none; }
+  .entry__text, .entry--right .entry__text { flex: none; width: 100%; text-align: left; }
+
+  .entry__links a { display: inline-block; padding: 6px 0; }
+}
+
+@media print {
+  .skip { display: none; }
+  a { text-decoration: underline; }
+}

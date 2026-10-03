@@ -1,0 +1,62 @@
+# Builds the site and publishes it to GitHub Pages.
+#
+# Nothing happens until you (1) merge or push to `main` and (2) switch on Pages for this repo:
+#   Settings -> Pages -> Build and deployment -> Source: GitHub Actions
+# Until Pages is enabled, this workflow stops at the "Configure Pages" step.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # --offline: render from content/projects.yaml exactly as committed. Syncing with GitHub is something you
+      # do on your own machine (python scripts/build.py), so new repos never reach the live site unreviewed.
+      - name: Render index.html
+        run: python scripts/build.py --offline
+
+      # Publish only what the page needs. docs/, content/, scripts/ and tests/ stay out of the live site.
+      - name: Stage the site
+        run: |
+          mkdir _site
+          cp index.html styles.css favicon.svg favicon.png apple-touch-icon.png og.png _site/
+          cp -r fonts thumbs _site/
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

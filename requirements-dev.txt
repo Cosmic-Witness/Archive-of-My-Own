@@ -1,0 +1,4 @@
+# Developer-only tools (fonts, screenshots, Lighthouse); not needed to build the site
+fonttools>=4.50
+brotli>=1.1
+playwright>=1.45
