@@ -2,8 +2,7 @@
 """PNG assets and screenshots, made with headless Chromium through Playwright (developer tool).
 
     python scripts/capture.py assets                      # favicon.png, apple-touch-icon.png, og.png
-    python scripts/capture.py screenshots                 # docs/screenshots/<preset>-<width>.png, 3 presets x 2 widths
-    python scripts/capture.py compare --reference DIR     # docs/screenshots/compare-1440.png, next to the reference site
+    python scripts/capture.py screenshots                 # shots/<preset>-<width>.png, 3 presets x 2 widths (not committed)
 
 `screenshots` also fails if a page logs a console message, has a failed request, scrolls sideways at 320px,
 or shows text in a face other than the one its preset asks for.
@@ -30,9 +29,9 @@ SITE_FILES = ["styles.css", "favicon.svg", "favicon.png", "apple-touch-icon.png"
 SITE_DIRS = ["fonts", "thumbs"]
 PRESETS = ("paper", "terminal", "mixed")
 EXPECT = {   # CSS family that the body and the h1 should really be drawn in, per preset
-    "paper": ("CMU Concrete", "CMU Concrete"),
-    "terminal": ("CMU Typewriter Text", "CMU Typewriter Text"),
-    "mixed": ("CMU Concrete", "CMU Typewriter Text"),
+    "paper": ("Roboto Serif Text", "Roboto Serif Display"),
+    "terminal": ("Space Mono", "Space Mono"),
+    "mixed": ("Space Mono", "Roboto Serif Display"),
 }
 
 
@@ -125,9 +124,9 @@ def cmd_assets(args) -> None:
 <link rel="icon" href="data:,"><link rel="stylesheet" href="styles.css"><style>
 body{{margin:0;padding:0;width:1200px;height:630px;display:flex;align-items:center;gap:64px;padding:0 72px;box-sizing:border-box;overflow:hidden}}
 .l{{flex:1}} h1{{font-size:84px;line-height:1.08;text-align:left;margin:0 0 28px}}
-.rule{{border-bottom:3px solid #000;width:100%;margin-bottom:22px}} p{{font-size:28px;margin:0;line-height:1.3}}
-.g{{display:grid;grid-template-columns:repeat(3,186px);gap:16px}} .g img{{border-radius:10px;display:block}}
-</style></head><body><div class="l"><h1>{name}</h1><div class="rule"></div><p>Projects, writing and experiments.</p></div>
+.rule{{border-bottom:3px solid var(--accent);box-shadow:0 12px 16px -12px rgba(255,122,26,.85);width:100%}}
+.g{{display:grid;grid-template-columns:repeat(3,186px);gap:16px}} .g img{{border-radius:4px;display:block}}
+</style></head><body><div class="l"><h1>{name}</h1><div class="rule"></div></div>
 <div class="g">{cells}</div></body></html>""", encoding="utf-8")
         with serve(site) as base:
             ctx, page, problems = new_page(b, 1200, 630)
@@ -141,7 +140,7 @@ body{{margin:0;padding:0;width:1200px;height:630px;display:flex;align-items:cent
 
 # ---- screenshots ----------------------------------------------------------------------------
 def cmd_screenshots(args) -> None:
-    out = ROOT / "docs" / "screenshots"
+    out = ROOT / "shots"
     out.mkdir(parents=True, exist_ok=True)
     failures = 0
     with browser() as b:
@@ -180,55 +179,11 @@ def cmd_screenshots(args) -> None:
     print("no console messages, failed requests, wrong fonts or sideways scrolling")
 
 
-# ---- side by side with the reference --------------------------------------------------------
-def cmd_compare(args) -> None:
-    ref = pathlib.Path(args.reference).resolve()
-    if not (ref / "index.html").exists():
-        sys.exit(f"{ref} has no index.html")
-    out = ROOT / "docs" / "screenshots"
-    out.mkdir(parents=True, exist_ok=True)
-    with browser() as b, tempfile.TemporaryDirectory() as tmp:
-        tmp = pathlib.Path(tmp)
-        with serve(ref) as base:
-            ctx = b.new_context(viewport={"width": 1440, "height": 900})
-            page = ctx.new_page()
-            page.route("**/*", lambda route, req: route.continue_() if req.url.startswith(base) else route.abort())
-            page.goto(f"{base}/index.html")
-            page.evaluate("document.fonts.ready")
-            page.wait_for_timeout(400)
-            page.screenshot(path=str(tmp / "ref.png"), full_page=True)
-            ctx.close()
-        site = stage("mixed", pathlib.Path(tempfile.mkdtemp(dir=tmp)))
-        with serve(site) as base:
-            ctx, page, _ = new_page(b, 1440)
-            page.goto(f"{base}/index.html")
-            page.evaluate("document.fonts.ready")
-            page.wait_for_load_state("networkidle")
-            page.screenshot(path=str(tmp / "mine.png"), full_page=True)
-            ctx.close()
-        (tmp / "cmp.html").write_text("""<!doctype html><meta charset="utf-8"><body style="margin:0;padding:24px;background:#e8e8e8;font:20px monospace">
-<div style="display:flex;gap:24px;align-items:flex-start">
-<figure style="margin:0"><figcaption style="margin:0 0 8px">Reference: gabgoh.github.io (1440px)</figcaption><img src="ref.png" style="display:block;background:#fff"></figure>
-<figure style="margin:0"><figcaption style="margin:0 0 8px">This site, mixed preset (1440px)</figcaption><img src="mine.png" style="display:block;background:#fff"></figure>
-</div></body>""", encoding="utf-8")
-        with serve(tmp) as base:
-            ctx = b.new_context(viewport={"width": 2976, "height": 900})
-            page = ctx.new_page()
-            page.goto(f"{base}/cmp.html")
-            page.wait_for_load_state("networkidle")
-            page.screenshot(path=str(out / "compare-1440.png"), full_page=True)
-            ctx.close()
-    print("docs/screenshots/compare-1440.png: written")
-
-
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("assets").set_defaults(fn=cmd_assets)
     sub.add_parser("screenshots").set_defaults(fn=cmd_screenshots)
-    c = sub.add_parser("compare")
-    c.add_argument("--reference", required=True, help="path to a local clone of the reference site")
-    c.set_defaults(fn=cmd_compare)
     args = ap.parse_args()
     args.fn(args)
 
