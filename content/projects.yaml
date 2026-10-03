@@ -40,7 +40,7 @@ site:
   description: "Personal site of Ismail Kasozi: projects, writing and experiments."
   # GitHub serves a repo at https://<user>.github.io only if the repo is called <user>.github.io.
   # Under any other repo name the address is https://<user>.github.io/<repo>/ and this should match it.
-  url: https://cosmic-witness.github.io/
+  url: https://cosmic-witness.github.io/Archive-of-My-Own/
   github_user: Cosmic-Witness
   site_repo: Archive-of-My-Own     # this repo; never listed as a project
   font: mixed                      # paper | terminal | mixed

@@ -2,7 +2,7 @@
    Layout and measurements follow the reference (gabgoh.github.io); typography is a deliberate choice. */
 
 /* ---- Fonts ---------------------------------------------------------------------------------
-   Self-hosted CM Unicode subsets (SIL OFL 1.1, see fonts/README.md).
+   Self-hosted CM Unicode subsets (SIL OFL 1.1, see fonts/OFL.txt).
    font-display: block, plus the <link rel="preload"> tags in index.html, means text is held back for
    a few milliseconds instead of being drawn in one face and then swapped to another. */
 @font-face { font-family: "CMU Concrete"; font-weight: 400; font-style: normal; font-display: block;
