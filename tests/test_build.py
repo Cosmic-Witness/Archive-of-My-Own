@@ -396,11 +396,11 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.render()
 
-    def test_drafts_and_todos_are_marked(self):
+    def test_drafts_are_hidden_and_todos_are_marked(self):
         self.run_build()
         html, stats = self.render()
         self.assertEqual(stats["drafts"], 4)
-        self.assertEqual(html.count('class="draft"'), 4)
+        self.assertNotIn('class="draft"', html)
         self.assertGreaterEqual(stats["todos"], 3)       # about paragraph, LinkedIn, and the placeholder blurbs
 
     def test_font_presets(self):

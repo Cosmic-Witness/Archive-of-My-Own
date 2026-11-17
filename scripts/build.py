@@ -475,12 +475,10 @@ def render_entry(e, side: str, user: str, thumbs_mod) -> str:
     title = esc(e.get("title") or pretty_title(name))
     primary = next((u for lab, u in links if lab == "Site"), links[0][1] if links else "")
     title_html = f'<a href="{esc(safe_url(primary))}">{title}</a>' if primary else title
-    status = str(e.get("blurb_status") or "").lower()
-    tail = ' <span class="draft">[draft]</span>' if status == "draft" else ""
-    body = paragraphs(e.get("blurb") or "", tail)
+    body = paragraphs(e.get("blurb") or "")
     link_html = ""
     if links:
-        link_html = '\n<p class="entry__links">' + " ".join(f'<a href="{esc(safe_url(u))}">{esc(l)}</a>' for l, u in links) + "</p>"
+        link_html = '\n<p class="entry__links">' + " ".join(f'<a href="{esc(safe_url(u))}">{esc(e.get("site_label") or l if l == "Site" else l)}</a>' for l, u in links) + "</p>"
     thumb = str(e.get("thumb") or f"thumbs/{name}.svg")
     alt = str(e.get("thumb_alt") or "").strip() or thumbs_mod.describe(name)
     if not (ROOT / thumb).exists():
