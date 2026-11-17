@@ -49,9 +49,13 @@ site:
 about:
   hello: Hi!
   paragraphs:
-    - "[TODO: one or two plain sentences on who you are and what you do.]"
-    - "[TODO: what you are interested in, in your own words.]"
-    - "[TODO: what you are working on, or looking for, right now.]"
+    - >-
+      I’m Ismail. I’m interested in applying tools from mathematics and physics to studying complex
+      adaptive systems, whether it’s financial markets, biological and artificial neural networks,
+      or population dynamics. I believe that in doing this, we will be able to better understand the
+      world around us and effect real change. Right now, I’m teaching myself undergraduate maths and
+      physics and working on distributed compute for AI training and inference. Outside of that, I
+      love to read, run and write, and my favourite authors at the moment are Ken Liu and Ted Chia
   photo: thumbs/photo-placeholder.svg      # [TODO] replace with your portrait (square, 300x300 or larger)
   photo_alt: Placeholder for a portrait of Ismail Kasozi
   contact:
