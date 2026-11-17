@@ -2,7 +2,7 @@
 #
 # The build refreshes the `github:` block of every entry from GitHub and never touches the rest.
 # So these fields are yours, and are never overwritten by a sync:
-#   title, section, section_status, blurb, blurb_status, built_with, links, thumb, thumb_alt, order, hidden
+#   title, section, section_status, blurb, blurb_status, built_with, links, show_code, thumb, thumb_alt, order, hidden
 # and everything under site:, about:, sections: and force_include:.
 #
 # How to
@@ -14,6 +14,7 @@
 #                       build), then most recently pushed.
 #   Hide an entry       `hidden: true`.   Show a repo listed under `excluded:`  add its name to
 #                       `force_include:` and rebuild.
+#   Hide a Code link    set `show_code: false` on that entry.
 #   Switch the font     `site.font:` paper | terminal | mixed.
 #   Swap a thumbnail    save your own SVG or PNG as thumbs/<name>.svg (or point `thumb:` at any file).
 #   Add a Writing entry copy the example below into `entries:` and fill it in.
@@ -88,7 +89,8 @@ entries:
       into its two coordinates.
     blurb_status: draft
     built_with: HTML, CSS, KaTeX
-    links: [{label: Paper, url: "https://github.com/Cosmic-Witness/Projections/blob/main/Projections.pdf"}]
+    links: []
+    show_code: false
     thumb: thumbs/Projections.svg
     thumb_alt: ''
     order:

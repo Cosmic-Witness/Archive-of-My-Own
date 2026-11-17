@@ -451,7 +451,7 @@ def sort_key(e):
 def entry_links(e, user: str) -> list[tuple[str, str]]:
     gh = e.get("github") or {}
     links: list[tuple[str, str]] = []
-    if gh.get("url"):
+    if gh.get("url") and e.get("show_code", True):
         links.append(("Code", gh["url"]))
     site = (gh.get("homepage") or "").strip()
     if not site and gh.get("has_pages") and gh.get("name"):
