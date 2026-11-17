@@ -57,24 +57,6 @@
 <p class="entry__links"><a href="https://github.com/Cosmic-Witness/Projections">Code</a> <a href="https://cosmic-witness.github.io/Projections/">Site</a> <a href="https://github.com/Cosmic-Witness/Projections/blob/main/Projections.pdf">Paper</a></p>
 </div>
 </article>
-<article class="entry entry--left" id="eliza">
-<div class="entry__media"><img class="thumb" src="thumbs/Eliza.svg" width="150" height="150" alt="Scatter of stock returns against market returns with a fitted red line and dashed zero axes."></div>
-<div class="entry__text">
-<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Eliza">Eliza</a></h3>
-<p>I wrote a small Python class for the capital asset pricing model. Give it a stock and an index, and it downloads the prices, regresses one on the other, and reports the beta, the alpha, and how much of the stock's volatility is the market's and how much is its own. A second method turns those into dollars of risk. I haven't written the last two methods yet, and every new instance prints a large green ASCII banner. <span class="draft">[draft]</span></p>
-<p class="entry__built"><b>Built with:</b> Python, pandas, statsmodels, yfinance</p>
-<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Eliza">Code</a></p>
-</div>
-</article>
-<article class="entry entry--right" id="ada">
-<div class="entry__media"><img class="thumb" src="thumbs/Ada.svg" width="150" height="150" alt="Five rectangles narrowing through a gate into a single line of evenly spaced squares."></div>
-<div class="entry__text">
-<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Ada">Ada</a></h3>
-<p>I wrote a bot that posts videos from a Google Drive folder to Instagram as Reels, one at a time, with at least a minute between uploads. Which videos have already gone out is kept in a Supabase table instead of a local file, so the Docker container can be restarted without posting anything twice. My README admits it may break Instagram's terms of service, so read it as an exercise in plumbing. <span class="draft">[draft]</span></p>
-<p class="entry__built"><b>Built with:</b> Python, Docker, Supabase, Google Drive API, instagrapi</p>
-<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Ada">Code</a></p>
-</div>
-</article>
 <article class="entry entry--left" id="stryder">
 <div class="entry__media"><img class="thumb" src="thumbs/Stryder.svg" width="150" height="150" alt="Training loss against epoch on a log scale, falling steeply at first and then flattening over 100 epochs."></div>
 <div class="entry__text">
@@ -87,13 +69,13 @@
 </section>
 <section id="fun" aria-labelledby="h-fun">
 <h2 id="h-fun">Fun</h2>
-<article class="entry entry--right" id="ellie">
-<div class="entry__media"><img class="thumb" src="thumbs/Ellie.svg" width="150" height="150" alt="A grid of photo frames in five columns, one column for each weekday."></div>
+<article class="entry entry--right" id="eliza">
+<div class="entry__media"><img class="thumb" src="thumbs/Eliza.svg" width="150" height="150" alt="Scatter of stock returns against market returns with a fitted red line and dashed zero axes."></div>
 <div class="entry__text">
-<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Ellie">Ellie</a></h3>
-<p>The New York Times emails a daily briefing, and the photographs in it are good enough that I wanted to keep them. Ellie reads those emails through the Gmail API, pulls out every image larger than 500 by 500 pixels, and files them in a folder named after the day. It cannot yet handle multipart emails, which is on the to-do list. <span class="draft">[draft]</span></p>
-<p class="entry__built"><b>Built with:</b> Python, Gmail API, Beautiful Soup, Pillow</p>
-<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Ellie">Code</a></p>
+<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Eliza">Eliza</a></h3>
+<p>I wrote a small Python class for the capital asset pricing model. Give it a stock and an index, and it downloads the prices, regresses one on the other, and reports the beta, the alpha, and how much of the stock's volatility is the market's and how much is its own. A second method turns those into dollars of risk. I haven't written the last two methods yet, and every new instance prints a large green ASCII banner. <span class="draft">[draft]</span></p>
+<p class="entry__built"><b>Built with:</b> Python, pandas, statsmodels, yfinance</p>
+<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Eliza">Code</a></p>
 </div>
 </article>
 <article class="entry entry--left" id="naive-discrete-fourier-transform">
@@ -103,6 +85,24 @@
 <p>A Fourier transform written from scratch, to see if I could turn the maths on paper into code that recovers the frequencies hiding in a signal. The toy signal is five sine and cosine waves added together, and the code finds each one by multiplying by a complex exponential at that frequency and integrating. The strongest wave, at 7 Hz, has an amplitude of 100, which makes the other four look a bit sad. <span class="draft">[draft]</span></p>
 <p class="entry__built"><b>Built with:</b> Python, NumPy, Matplotlib</p>
 <p class="entry__links"><a href="https://github.com/Cosmic-Witness/Naive-Discrete-Fourier-Transform">Code</a></p>
+</div>
+</article>
+<article class="entry entry--right" id="ellie">
+<div class="entry__media"><img class="thumb" src="thumbs/Ellie.svg" width="150" height="150" alt="A grid of photo frames in five columns, one column for each weekday."></div>
+<div class="entry__text">
+<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Ellie">Ellie</a></h3>
+<p>The New York Times emails a daily briefing, and the photographs in it are good enough that I wanted to keep them. Ellie reads those emails through the Gmail API, pulls out every image larger than 500 by 500 pixels, and files them in a folder named after the day. It cannot yet handle multipart emails, which is on the to-do list. <span class="draft">[draft]</span></p>
+<p class="entry__built"><b>Built with:</b> Python, Gmail API, Beautiful Soup, Pillow</p>
+<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Ellie">Code</a></p>
+</div>
+</article>
+<article class="entry entry--left" id="ada">
+<div class="entry__media"><img class="thumb" src="thumbs/Ada.svg" width="150" height="150" alt="Five rectangles narrowing through a gate into a single line of evenly spaced squares."></div>
+<div class="entry__text">
+<h3 class="entry__title"><a href="https://github.com/Cosmic-Witness/Ada">Ada</a></h3>
+<p>I wrote a bot that posts videos from a Google Drive folder to Instagram as Reels, one at a time, with at least a minute between uploads. Which videos have already gone out is kept in a Supabase table instead of a local file, so the Docker container can be restarted without posting anything twice. My README admits it may break Instagram's terms of service, so read it as an exercise in plumbing. <span class="draft">[draft]</span></p>
+<p class="entry__built"><b>Built with:</b> Python, Docker, Supabase, Google Drive API, instagrapi</p>
+<p class="entry__links"><a href="https://github.com/Cosmic-Witness/Ada">Code</a></p>
 </div>
 </article>
 </section>

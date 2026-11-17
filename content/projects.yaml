@@ -158,7 +158,7 @@ entries:
       source: fixture (offline-seed.json)
   - id: Naive-Discrete-Fourier-Transform
     section: fun
-    section_status: proposed
+    section_status: confirmed
     title: Naive Discrete Fourier Transform
     blurb: >-
       A Fourier transform written from scratch, to see if I could turn the maths on paper into code
@@ -171,7 +171,7 @@ entries:
     links: []
     thumb: thumbs/Naive-Discrete-Fourier-Transform.svg
     thumb_alt: ''
-    order:
+    order: 2
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
     github:
@@ -198,8 +198,8 @@ entries:
         The coordinates are complex numbers, and their magnitudes provide the information on "how much" of a particular frequency is present in the signal.
       source: fixture (offline-seed.json)
   - id: Eliza
-    section: projects
-    section_status: proposed
+    section: fun
+    section_status: confirmed
     title: Eliza
     blurb: >-
       I wrote a small Python class for the capital asset pricing model. Give it a stock and an index,
@@ -212,7 +212,7 @@ entries:
     links: []
     thumb: thumbs/Eliza.svg
     thumb_alt: ''
-    order:
+    order: 1
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
     github:
@@ -231,8 +231,8 @@ entries:
       readme: ''
       source: fixture (offline-seed.json)
   - id: Ada
-    section: projects
-    section_status: proposed
+    section: fun
+    section_status: confirmed
     title: Ada
     blurb: >-
       I wrote a bot that posts videos from a Google Drive folder to Instagram as Reels, one at a time,
