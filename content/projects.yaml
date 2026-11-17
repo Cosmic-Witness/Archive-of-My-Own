@@ -93,8 +93,8 @@ entries:
     links: []
     show_code: false
     site_label: Essay
-    thumb: thumbs/photos/projections.jpg
-    thumb_alt: Printed mathematical equations on a page.
+    thumb: thumbs/illustrations/projections.webp
+    thumb_alt: A locked door and keypad transform a waveform into a key.
     order:
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
@@ -128,8 +128,8 @@ entries:
     blurb_status: draft
     built_with: Python, Gmail API, Beautiful Soup, Pillow
     links: []
-    thumb: thumbs/photos/ellie.jpg
-    thumb_alt: A newspaper open to an illustrated article.
+    thumb: thumbs/illustrations/ellie.webp
+    thumb_alt: A newspaper photograph being clipped and saved in a folder.
     order:
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
@@ -173,8 +173,8 @@ entries:
     blurb_status: draft
     built_with: Python, NumPy, Matplotlib
     links: []
-    thumb: thumbs/photos/naive-dft.jpg
-    thumb_alt: Controls on a vintage audio signal generator.
+    thumb: thumbs/illustrations/naive-dft.webp
+    thumb_alt: A combined waveform separating into individual waves.
     order: 2
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
@@ -214,8 +214,8 @@ entries:
     blurb_status: draft
     built_with: Python, pandas, statsmodels, yfinance
     links: []
-    thumb: thumbs/photos/eliza.jpg
-    thumb_alt: A printed stock price graph on a financial newspaper.
+    thumb: thumbs/illustrations/eliza.webp
+    thumb_alt: A balance scale compares a stock chart with a market chart.
     order: 1
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
@@ -247,8 +247,8 @@ entries:
     blurb_status: draft
     built_with: Python, Docker, Supabase, Google Drive API, instagrapi
     links: []
-    thumb: thumbs/photos/ada.jpg
-    thumb_alt: A curling strip of 8 mm film.
+    thumb: thumbs/illustrations/ada.webp
+    thumb_alt: A strip of video frames passes a clock towards a phone.
     order:
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
@@ -308,8 +308,8 @@ entries:
     blurb_status: draft
     built_with: Python, PyTorch, Weights & Biases
     links: []
-    thumb: thumbs/photos/stryder.jpg
-    thumb_alt: Rotors from an Enigma cipher machine.
+    thumb: thumbs/illustrations/stryder.webp
+    thumb_alt: A paper cipher passes through a decoder with a network of connected nodes.
     order:
     hidden: false
     # refreshed from GitHub on every build; edit the fields above, not these
