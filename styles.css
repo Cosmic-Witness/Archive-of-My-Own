@@ -110,7 +110,7 @@ h2 {
 .entry--right { flex-direction: row-reverse; }
 .entry--right .entry__text { text-align: right; }
 
-.thumb { display: block; width: 150px; height: 150px; border-radius: 10px; background: #333; }
+.thumb { display: block; width: 150px; height: 150px; object-fit: cover; border-radius: 10px; background: #333; }
 
 .entry__title { margin: 0; font-size: inherit; font-weight: 700; line-height: inherit; }
 .entry__text p { margin: 0 0 0.75em; }
