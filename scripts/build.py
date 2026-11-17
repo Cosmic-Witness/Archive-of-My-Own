@@ -448,19 +448,6 @@ def sort_key(e):
     return (1, pinned_first, rank if pinned_first == 0 else 0, inverted, str(e.get("title", "")).lower())
 
 
-def built_with(e) -> str:
-    manual = str(e.get("built_with") or "").strip()
-    if manual:
-        return manual
-    gh = e.get("github") or {}
-    items, seen = [], set()
-    for x in [gh.get("language")] + [str(t).replace("-", " ") for t in (gh.get("topics") or [])]:
-        if x and x.lower() not in seen:
-            seen.add(x.lower())
-            items.append(str(x))
-    return ", ".join(items[:6])
-
-
 def entry_links(e, user: str) -> list[tuple[str, str]]:
     gh = e.get("github") or {}
     links: list[tuple[str, str]] = []
@@ -491,8 +478,6 @@ def render_entry(e, side: str, user: str, thumbs_mod) -> str:
     status = str(e.get("blurb_status") or "").lower()
     tail = ' <span class="draft">[draft]</span>' if status == "draft" else ""
     body = paragraphs(e.get("blurb") or "", tail)
-    bw = built_with(e)
-    built = f'\n<p class="entry__built"><b>Built with:</b> {inline(bw)}</p>' if bw else ""
     link_html = ""
     if links:
         link_html = '\n<p class="entry__links">' + " ".join(f'<a href="{esc(safe_url(u))}">{esc(l)}</a>' for l, u in links) + "</p>"
@@ -503,7 +488,7 @@ def render_entry(e, side: str, user: str, thumbs_mod) -> str:
     anchor = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     return (f'<article class="entry entry--{side}" id="{esc(anchor)}">\n'
             f'<div class="entry__media"><img class="thumb" src="{esc(thumb)}" width="150" height="150" alt="{esc(alt)}"></div>\n'
-            f'<div class="entry__text">\n<h3 class="entry__title">{title_html}</h3>\n{body}{built}{link_html}\n</div>\n</article>')
+            f'<div class="entry__text">\n<h3 class="entry__title">{title_html}</h3>\n{body}{link_html}\n</div>\n</article>')
 
 
 def email_parts(value) -> tuple[str, str] | None:
